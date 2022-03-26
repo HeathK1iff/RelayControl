@@ -1,0 +1,86 @@
+﻿<Window x:Class="MqttDevices.Forms.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mv="clr-namespace:MqttDevices.ViewModel.Main"
+        mc:Ignorable="d"
+        Height="180" 
+        MinWidth="300"
+        MaxWidth="300"
+        Style="{DynamicResource WindowFormStyle}" 
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <mv:MainViewModel/>
+    </Window.DataContext>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="CloseForm_Executed" />
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" 
+              Grid.Column="0" 
+              Grid.ColumnSpan="2" 
+              MouseLeftButtonDown="Grid_MouseLeftButtonDown"
+              Style="{DynamicResource WindowTitleStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="18"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center" Margin="5 0 0 0">Relay Control</TextBlock>
+            <Button
+                    x:Name="btnOptions"
+                    Grid.Column="1"
+                    Command="{Binding OpenSettingCommand}"
+                    Style="{DynamicResource SettingButtonStyle}"/>
+            <Button
+                    x:Name="btnClose"
+                    Grid.Column="2"
+                    Command="ApplicationCommands.Close"
+                    Style="{DynamicResource CloseButtonStyle}">
+                <Button.Content>
+                    <Image Source="/Images/Close.png"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+        <ListView
+                x:Name="devices"
+                ItemsSource="{Binding Devices}"
+                Grid.Row="1"
+                Background="Transparent"
+                Grid.ColumnSpan="3">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=Name}"/>
+                        <ToggleButton 
+                            Grid.Column="1"
+                            Content="State"
+                            IsChecked="{Binding Path=State, Mode=OneWay}"
+                            Command="{Binding DataContext.SwitchRelayCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                            CommandParameter="{Binding}"
+                            Width="50"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

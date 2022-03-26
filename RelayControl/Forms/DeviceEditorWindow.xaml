@@ -1,0 +1,88 @@
+﻿<Window x:Class="MqttDevices.Forms.DeviceEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MqttDevices.Forms"
+        mc:Ignorable="d"
+        x:Name="DefenitionDetailsWin" 
+        Height="140" 
+        Style="{DynamicResource WindowFormStyle}"
+        Width="350" 
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" 
+                    Value="Center">
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" 
+                    Value="5"/>
+            <Setter Property="MaxHeight"
+                    Value="28"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.ColumnSpan="2" 
+              Style="{DynamicResource WindowTitleStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="18"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Add/Edit defenition" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
+            <Button Grid.Column="1"  
+                    Style="{DynamicResource CloseButtonStyle}" 
+                    Margin="0 0 5 0"
+                    Command="{Binding CloseCommand}">
+                <Button.Content>
+                    <Image Source="/Images/Close.png"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+
+        <Label Grid.Row="1" Content="Name: "/>
+        <Label Grid.Row="2" Content="Topic: "/>
+        <TextBox Grid.Row="1" MaxHeight="28"
+                 Text="{Binding Name}"
+                 Grid.Column="1"/>
+        <TextBox Grid.Row="2" 
+                 Text="{Binding Topic}"
+                 MaxHeight="28" 
+                 Grid.Column="1"/>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Grid.Row="3"
+                    Grid.Column="1" >
+            <Button 
+                Margin="5"
+                MinWidth="100"
+                MinHeight="28"
+                Command="{Binding SaveCommand}"
+                Content="Save"/>
+            <Button 
+                HorizontalAlignment="Right"
+                Margin="5"
+                MinWidth="100"
+                MinHeight="28"
+                Command="{Binding CloseCommand}"
+                Content="Cancel"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
